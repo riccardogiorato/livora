@@ -33,7 +33,7 @@ export default function WeeksLife(props) {
   let lifeBlocks = [];
   let blockSize = 1;
   if (process.browser) {
-    blockSize = Math.round((width - 140) / 52);
+    blockSize = Math.round((width - (width*0.2)) / 52);
   }
 
   const yearPast = (

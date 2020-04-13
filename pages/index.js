@@ -1,13 +1,11 @@
 import { useState } from "react";
 import Head from "next/head";
 import DateDiff from "date-diff";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const WeeksLifeNoSSR = dynamic(
-  () => import('../components/WeeksLife'),
-  { ssr: false }
-)
-
+const WeeksLifeNoSSR = dynamic(() => import("../components/WeeksLife"), {
+  ssr: false,
+});
 
 const Home = () => {
   const sexes = { 0: "Man", 1: "Women" };
@@ -24,20 +22,17 @@ const Home = () => {
     const monthOfBirth = dateOfBirth.getMonth();
     const dayOfBirth = dateOfBirth.getDate();
 
-    const monthToday = today.getMonth();
-    const dayOfToday = today.getDate();
+    const currentYearBirthday = new Date(
+      +yearToday + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
+    );
+    const nextYearBirthday= new Date(
+      +yearToday +1 + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
+    );
 
-    if (
-      monthOfBirth > monthToday ||
-      (monthToday == monthOfBirth && dayOfToday > dayOfBirth)
-    ) {
-      return new Date(
-        +yearToday + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
-      );
+    if (today <= currentYearBirthday) {
+      return currentYearBirthday;
     } else {
-      return new Date(
-        +yearToday + 1 + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
-      );
+      return nextYearBirthday;
     }
   }
 
@@ -52,6 +47,7 @@ const Home = () => {
   const remainingWeeksBirthday = Math.round(nextBirthdayDiff.weeks());
   const thisYearPassedWeeks = 52 - remainingWeeksBirthday;
 
+  const yourMaxAge = 85;
 
   return (
     <div className="container">
@@ -63,16 +59,28 @@ const Home = () => {
       <main>
         <h1 className="title">Welcome to your entire life!</h1>
 
-        <p>This "thing" is gone forever! Past: ⚫ ️</p>
+        <p>
+          This "thing" is gone forever! Past:{" "}
+          <span
+            className="past"
+            style={{ width: "15px", height: "15px" }}
+          ></span>
+          ️
+        </p>
 
-        <p>This "thing" can still be lived! Future: ⚪️ ️</p>
+        <p>This "thing" can still be lived! Future:           <span
+            className="future"
+            style={{ width: "15px", height: "15px" }}
+          ></span> ️</p>
 
-        <p>You are {yearsOld}</p>
-        {thisYearMonths}
-        <p>{thisMonthWeeks}</p>
-        <p>{thisMonthWeeks}</p>
+        <p>You are {yearsOld} years old.</p>
         <div id="yourLife">
-          <WeeksLifeNoSSR age={yearsOld} pastWeeks={thisYearPassedWeeks} futureWeeks={remainingWeeksBirthday}/>
+          <WeeksLifeNoSSR
+            age={yearsOld}
+            maxAge={yourMaxAge}
+            pastWeeks={thisYearPassedWeeks}
+            futureWeeks={remainingWeeksBirthday}
+          />
         </div>
       </main>
 

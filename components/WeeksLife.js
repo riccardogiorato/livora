@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function useWindowSize() {
-  const isClient = typeof window === 'object';
+  const isClient = typeof window === "object";
 
   function getSize() {
     return {
       width: isClient ? window.innerWidth : undefined,
-      height: isClient ? window.innerHeight : undefined
+      height: isClient ? window.innerHeight : undefined,
     };
   }
 
@@ -16,24 +16,24 @@ function useWindowSize() {
     if (!isClient) {
       return false;
     }
-    
+
     function handleResize() {
       setWindowSize(getSize());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return windowSize;
 }
 
 export default function WeeksLife(props) {
-  const {width} = useWindowSize();
+  const { width } = useWindowSize();
   let lifeBlocks = [];
   let blockSize = 1;
   if (process.browser) {
-    blockSize = Math.round((width - (width*0.2)) / 52);
+    blockSize = Math.round((width - width * 0.2) / 52);
   }
 
   const yearPast = (
@@ -42,7 +42,7 @@ export default function WeeksLife(props) {
         .fill()
         .map((index) => (
           <span
-          key={index}
+            key={index}
             className="week past"
             style={{ width: blockSize, height: blockSize }}
           ></span>
@@ -94,12 +94,21 @@ export default function WeeksLife(props) {
   );
 
   for (let year = 0; year < props.maxAge - props.age; year++) {
-    lifeBlocks.push(
-      <div>
-        {yearFuture}
-      </div>
-    );
+    lifeBlocks.push(<div>{yearFuture}</div>);
   }
 
-  return <div>{lifeBlocks}</div>;
+  return (
+    <div>
+      Week of the Year -->
+      <span className="vertical">Age --></span>
+      <br />
+      {lifeBlocks}
+      <style jsx global>{`
+      .vertical{
+        transform: rotate(90deg);
+        position:absolute;
+      }
+      `}</style>
+    </div>
+  );
 }

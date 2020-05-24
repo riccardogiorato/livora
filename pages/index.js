@@ -25,8 +25,8 @@ const Home = () => {
     const currentYearBirthday = new Date(
       +yearToday + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
     );
-    const nextYearBirthday= new Date(
-      +yearToday +1 + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
+    const nextYearBirthday = new Date(
+      +yearToday + 1 + "-" + (+monthOfBirth + 1) + "-" + dayOfBirth
     );
 
     if (today <= currentYearBirthday) {
@@ -47,7 +47,7 @@ const Home = () => {
   const remainingWeeksBirthday = Math.round(nextBirthdayDiff.weeks());
   const thisYearPassedWeeks = 52 - remainingWeeksBirthday;
 
-  const yourMaxAge = 85;
+  const yourMaxAge = 87;
 
   return (
     <div className="container">
@@ -68,12 +68,22 @@ const Home = () => {
           ️
         </p>
 
-        <p>This "thing" can still be lived! Future:           <span
+        <p>
+          This "thing" can still be lived! Future:{" "}
+          <span
             className="future"
             style={{ width: "15px", height: "15px" }}
-          ></span> ️</p>
+          ></span>
+          ️
+        </p>
 
-        <p>You are {yearsOld} years old.</p>
+        <p>
+          You are {yearsOld} years old.
+          <br />
+          With a life expectancy of {yourMaxAge}
+          you probably still have 
+           {yourMaxAge - yearsOld} years to live.
+        </p>
         <div id="yourLife">
           <WeeksLifeNoSSR
             age={yearsOld}

@@ -1,0 +1,26 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+'LAYOUT_WITH_LEGEND()
+
+title Component diagram for LIVORA
+
+
+Container(spa, "Single-Page App", "Typescript, ReactJS", "Provides the UI to showcase the user age")
+Container(backend_api, "API Age", "Typescript, Nodejs Lambda", "Provides Age expectancy functionality via API")
+
+
+Container_Boundary(spa, "Single-Page App") {
+    Component(sign, "Sign In Controller", "MVC Rest Controlle", "Allows users to sign in to the internet banking system")
+    Component(accounts, "Accounts Summary Controller", "MVC Rest Controlle", "Provides customers with a summory of their bank accounts")
+    Component(security, "Security Component", "Spring Bean", "Provides functionality related to singing in, changing passwords, etc.")
+    Component(mbsfacade, "Mainframe Banking System Facade", "Spring Bean", "A facade onto the mainframe banking system.")
+
+    Rel(sign, security, "Uses")
+    Rel(accounts, mbsfacade, "Uses")
+}
+
+Rel(spa, backend_api, "Uses", "JSON/HTTPS")
+
+
+@enduml

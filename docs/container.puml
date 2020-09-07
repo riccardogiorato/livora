@@ -1,0 +1,21 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN
+'LAYOUT_WITH_LEGEND()
+
+title Container diagram for LIVORA
+
+
+Person(user, "User of the web PWA", "Anyone having a URL or local data to see progress age")
+
+System_Boundary(livora_system, "LIVORA Netlify App") {
+    Container(spa, "Single-Page App", "Typescript, ReactJS", "Provides the UI to showcase the user age")
+    Container(backend_api, "API Age", "Typescript, Nodejs Lambda", "Provides Age expectancy functionality via API")
+}
+
+Rel(user, spa, "Uses", "HTTPS")
+
+Rel(spa, backend_api, "Uses", "async, JSON/HTTPS")
+
+@enduml

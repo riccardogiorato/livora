@@ -11,16 +11,17 @@ Container(backend_api, "API Age", "Typescript, Nodejs Lambda", "Provides Age exp
 
 
 Container_Boundary(spa, "Single-Page App") {
-    Component(sign, "Sign In Controller", "MVC Rest Controlle", "Allows users to sign in to the internet banking system")
-    Component(accounts, "Accounts Summary Controller", "MVC Rest Controlle", "Provides customers with a summory of their bank accounts")
-    Component(security, "Security Component", "Spring Bean", "Provides functionality related to singing in, changing passwords, etc.")
-    Component(mbsfacade, "Mainframe Banking System Facade", "Spring Bean", "A facade onto the mainframe banking system.")
+    Component(user_data_control, "User Data Controller", "Flow Manager", "Manage the current user data, input and viewing of life/death")
+    Component(data_manager, "Age Data Manager", "Context Component", "Load the user info from the URL or from the localStorage/cookies")
+    Component(input_form, "User Input Form", "Component Form", "Let the user enter its data skipping also data it doesnt want to enter like sex or country.")
+    Component(age_viewer, "Age Viewer", "Component", "Showcase the user age with different possible layouts that can be changed")
 
-    Rel(sign, security, "Uses")
-    Rel(accounts, mbsfacade, "Uses")
+    Rel(user_data_control, data_manager, "Uses")
+    Rel(user_data_control, input_form, "Uses")
+    Rel(user_data_control, age_viewer, "Uses")
 }
 
-Rel(spa, backend_api, "Uses", "JSON/HTTPS")
+Rel(data_manager, backend_api, "Uses", "JSON/HTTPS")
 
 
 @enduml

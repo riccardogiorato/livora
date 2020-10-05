@@ -1,27 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
-import { styled } from "baseui";
-
-import { Display1 } from "baseui/typography";
-
-const Centered = styled("div", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100vh",
-});
+import IntroLogo from "./components/IntroLogo";
+import Logo from "./components/logo";
 
 function App() {
-  return (
-    <div className="App">
-      <Centered>
-        <Display1>
-          <span className="azonix">LIVORA</span>
-        </Display1>
-      </Centered>
-    </div>
-  );
+  const [logo, SetLogo] = useState(<IntroLogo />);
+  setTimeout(() => {
+    SetLogo(
+      <span>
+        <Logo />
+      </span>
+    );
+  }, 1000);
+
+  return <div className="App">{logo}</div>;
 }
 
 export default App;
